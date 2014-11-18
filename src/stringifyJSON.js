@@ -20,6 +20,7 @@ var stringifyJSON = function(obj) {
     }else if(obj === undefined){
     	return 'undefined';
     }else if (typeof(obj)==='string'){
+    	//strings can also be treated as objects. one could recursively loop through each element adding characters individually
       JSON += '\"' +obj.toString()+'\"';
       return JSON;
     }else if (typeof(obj)=== 'number' || typeof(obj)=== 'boolean'){
@@ -37,7 +38,7 @@ var stringifyJSON = function(obj) {
           JSON += ',';
         }
       }
-      //could also use _.each(obj,stringifyJSON)
+      //could also use _.each(obj,stringifyJSON), passing the array to _.each
       JSON += ']';
       return JSON;
 		
@@ -50,7 +51,8 @@ var stringifyJSON = function(obj) {
       //stop: 
       
       for (var prop in obj){
-      	if(typeof(obj[prop]) === 'function'){      		
+      	if(typeof(obj[prop]) === 'function'){
+      		//do nothing      		
       	}else if ((obj[prop] !== undefined)){
       		//console.log(typeof(obj[prop]));
       		//alert(prop.toString() + ':'+obj[prop]);
@@ -58,6 +60,7 @@ var stringifyJSON = function(obj) {
       	}
       }
       if (JSON.length > 1){
+      	//remove commas
       	JSON = JSON.slice(0,-1);
       }
       JSON += '}';
